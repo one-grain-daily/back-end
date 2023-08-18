@@ -13,6 +13,10 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public User findUser(String username){
+        return userRepository.findByUsername(username);
+    }
+
     public List<Diary> Show_diaries(String username){
         User userEntity = userRepository.findByUsername(username);
         System.out.println("일기 목록 : " + userEntity.getDiaries());

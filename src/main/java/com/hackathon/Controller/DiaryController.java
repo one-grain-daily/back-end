@@ -3,9 +3,13 @@ package com.hackathon.Controller;
 import com.hackathon.DTO.DiaryPostingDTO;
 import com.hackathon.Service.DiaryService;
 import com.hackathon.Service.UserService;
+import com.hackathon.model.Diary;
+import com.hackathon.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 public class DiaryController {
@@ -15,7 +19,40 @@ public class DiaryController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("api/v1/user/getDiary")
+    @GetMapping("api/v1/user/getDiary/{date}") // 2023-01-01-0000 이라가정
+    public Diary getDiary(@PathVariable String date, Authentication authentication){
+        User userEntity = userService.findUser(authentication.getName());
+        Diary diary = new Diary();
+
+        String[] times = date.split("-");
+        String year = times[0];
+        String month = times[1];
+        String day = times[2];
+
+        System.out.println(year + " " + month + " " + day);
+
+        for(int i = 0; i < userEntity.getDiaries().size(); i++){
+            Diary tmp_diary = userEntity.getDiaries().get(i);
+
+            LocalDateTime daytime = tmp_diary.getCreateTime().toLocalDateTime();
+            String tmp_year = String.valueOf(daytime.getYear());
+            String tmp_month = String.valueOf(daytime.getMonthValue());
+            if(daytime.getMonthValue() < 10)
+                tmp_month = "0" + tmp_month;
+
+            String tmp_day = String.valueOf(daytime.getDayOfMonth());
+            if(daytime.getDayOfMonth() < 10)
+                tmp_day = "0" + tmp_day;
+
+            if((year.equals(tmp_year) && month.equals(tmp_month)) && day.equals(tmp_day)){
+                diary = tmp_diary;
+                break;
+            }
+        }
+        return diary;
+    }
+
+    @GetMapping("/api/v1/user/getDiary")
     public String showDiary(Authentication authentication){
         userService.Show_diaries(authentication.getName());
         return "일기 목록 가져오기 완료";
