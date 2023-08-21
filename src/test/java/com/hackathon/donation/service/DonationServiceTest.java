@@ -1,19 +1,15 @@
 package com.hackathon.donation.service;
 
-import com.hackathon.Repository.GrainRepository;
 import com.hackathon.Repository.UserRepository;
 import com.hackathon.donation.domain.Basket;
 import com.hackathon.donation.domain.Donation;
 import com.hackathon.donation.repository.DonationRepository;
-import com.hackathon.model.Grain;
 import com.hackathon.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,9 +21,9 @@ class DonationServiceTest {
     @Autowired private DonationService donationService;
     @Autowired private DonationRepository donationRepository;
     @Autowired private UserRepository userRepository;
-    @Autowired private GrainRepository grainRepository;
 
     @Test
+    @DisplayName("기부 생성")
     public void createDonation() throws Exception {
         //given
 
@@ -46,22 +42,7 @@ class DonationServiceTest {
         donationService.createDonation();
         Donation donation = donationRepository.findCurrentDonation();
         User user = new User();
-        user.setEmail("test@test");
-        user.setRoles("ROLE_USER");
-        String rawPassword = user.getPassword();
-        String encPassword = rawPassword;
-        String email = user.getEmail();
-        user.setPassword(encPassword);
-        user.setEmail(email);
-
-        Grain grain = new Grain();
-        grain.setCurrent_grain_num(0);
-        grain.setDonation_grain_num(0);
-        grainRepository.save(grain);
-        user.setGrain(grain);
-
         userRepository.save(user);
-
 
         Long defaultGrain = donation.getBasket();
 
@@ -79,24 +60,22 @@ class DonationServiceTest {
     @DisplayName("기부를 하면 사용자가 추가된다.")
     public void donate_user() throws Exception {
         //given
+        donationService.createDonation();
+        Donation donation = donationRepository.findCurrentDonation();
+        User user = new User();
+        userRepository.save(user);
 
-
-
-        //when
-
-        //then
-    }
-
-
-
-
-    @Test
-    public void getBasket() throws Exception {
-        //given
+        Long defaultGrain = donation.getBasket();
 
         //when
+        donationService.donate(user, 100L);
+        Basket basket = donationService.getBasket();
 
         //then
+        //사용자 수
+        assertEquals(donation.getUsers().size(), 1);
+        //사용자
+        assertEquals(donation.getUsers().get(0), user);
     }
 
 
