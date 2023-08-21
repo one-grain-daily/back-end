@@ -32,7 +32,7 @@ public class DonationController {
 
         List<Donation> donations = donationService.getDonations();
         model.addAttribute("donations", donations);
-        return "donationList";
+        return "donation_list";
 
     }
 

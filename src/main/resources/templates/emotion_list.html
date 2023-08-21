@@ -1,0 +1,27 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content">
+
+    <div class="container mt-5">
+        <h2>감정 목록</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>감정 이름</th>
+                <th>감정 이미지</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="emotion : ${emotions}">
+                <td th:text="${emotion.name}">감정 이름</a></td>
+                <td>
+                    <img th:src="@{${emotion.image}}" alt="감정 이미지" class="img-thumbnail" width="100">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a class="btn btn-primary" th:href="@{/emotions/add}">감정 추가</a>
+    </div>
+
+
+</div>
+</html>

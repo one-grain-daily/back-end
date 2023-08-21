@@ -7,6 +7,8 @@ server:
       enabled: true
       force: true
 
+upload:
+  directory: static/images
 spring:
   mvc:
     view:
@@ -14,15 +16,15 @@ spring:
       suffix: .jsp
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/jwt?serverTimezone=Asia/Seoul
-    username: cho
-    password: hee6455
+    url: jdbc:h2:tcp://localhost/~/one-grain-daily
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       use-new-id-generator-mappings: false
@@ -33,3 +35,4 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+

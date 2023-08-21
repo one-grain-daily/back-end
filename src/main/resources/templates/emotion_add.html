@@ -1,0 +1,25 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content">
+
+    <div class="container mt-5">
+        <h2>감정 추가</h2>
+        <form th:action method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="name" class="form-label">감정 이름</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">감정 이미지</label>
+                <input type="file" class="form-control" id="image" name="image" required>
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">위로 메시지</label>
+                <input type="text" class="form-control" id="message" name="message" required>
+            </div>
+            <button type="submit" class="btn btn-primary">추가</button>
+        </form>
+    </div>
+
+
+</div>
+</html>
