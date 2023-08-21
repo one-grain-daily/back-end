@@ -50,4 +50,8 @@ public class Donation extends BaseTimeEntity {
         this.basket += basket;
     }
 
+    public void done(){
+        status = DonationStatus.DONE;
+    }
+
 }
