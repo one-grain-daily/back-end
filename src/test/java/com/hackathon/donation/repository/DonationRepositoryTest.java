@@ -32,6 +32,7 @@ class DonationRepositoryTest {
     }
 
     @Test
+    @DisplayName("기부 저장")
     void save() {
 
         Donation donation = Donation.createDonation();
