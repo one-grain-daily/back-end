@@ -1,5 +1,6 @@
 package com.hackathon.model;
 
+import com.hackathon.donation.domain.Donation;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -28,4 +29,8 @@ public class User {
         }
         return new ArrayList<>();
     }
+
+    @ManyToMany
+    private List<Donation> donations;
+
 }
