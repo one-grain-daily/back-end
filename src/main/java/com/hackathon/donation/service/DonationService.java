@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -35,6 +37,10 @@ public class DonationService {
         basket.setCurrent_grain(donation.getBasket());
         basket.setMax_grain(10000L);
         return basket;
+    }
+
+    public List<Donation> getDonations(){
+        return donationRepository.findAll();
     }
 
 }
