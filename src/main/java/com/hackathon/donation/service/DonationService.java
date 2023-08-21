@@ -23,13 +23,14 @@ public class DonationService {
 
     //기부 하기
     public void donate(User user, Long grains){
-        Donation donation = donationRepository.findLastDonation().get();
+        Donation donation = donationRepository.findCurrentDonation();
         donation.donate(user, grains);
     }
 
     //바구니 갯수 조회
+    @Transactional(readOnly = true)
     public Basket getBasket(){
-        Donation donation = donationRepository.findLastDonation().get();
+        Donation donation = donationRepository.findCurrentDonation();
         Basket basket = new Basket();
         basket.setCurrent_grain(donation.getBasket());
         basket.setMax_grain(10000L);
