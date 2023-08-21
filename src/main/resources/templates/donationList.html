@@ -1,33 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-<hr class="my-4">
-<div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>바구니 완충일</th>
-            <th>기부 상태</th>
-            <th>기부자 명단</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="donation : ${donations}">
-            <td th:text="${donation.createdDate}">바구니 채워진 날짜</a></td>
-            <td th:text="${donation.status}">기부 상태</a></td>
-            <td th:each="user : ${donation.users}">
-                <p th:text="${user.name}"></p>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-
-</body>
+<html layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <hr class="my-4">
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>바구니 완충일</th>
+                    <th>기부 상태</th>
+                    <th>기부자 명단</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="donation : ${donations}">
+                    <td th:text="${donation.createdDate}">바구니 채워진 날짜</a></td>
+                    <td th:text="${donation.status}">기부 상태</a></td>
+                    <td th:each="user : ${donation.users}">
+                        <p th:text="${user.name}"></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </html>
