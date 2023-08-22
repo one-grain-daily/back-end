@@ -14,12 +14,12 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hack?serverTimezone=Asia/Seoul
-    username: cho
-    password: hee6455
-#    url : jdbc:mysql://115.85.183.243:3306/hack?serverTimezone=Asia/Seoul
-#    username: spring
+#    url: jdbc:mysql://localhost:3306/hack?serverTimezone=Asia/Seoul
+#    username: cho
 #    password: hee6455
+    url : jdbc:mysql://115.85.183.243:3306/hack?serverTimezone=Asia/Seoul
+    username: spring
+    password: hee6455
 
   jpa:
     open-in-view: true

@@ -1,12 +1,14 @@
 package com.hackathon.Controller;
 
 import com.hackathon.DTO.DiaryPostingDTO;
+import com.hackathon.DTO.MonthReviewResDTO;
 import com.hackathon.Service.DiaryService;
 import com.hackathon.Service.UserService;
 import com.hackathon.model.Diary;
 import com.hackathon.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -62,7 +64,7 @@ public class DiaryController {
     public String diaryPosting(@RequestBody DiaryPostingDTO diarypostingDTO, Authentication authentication){
         diaryService.DiaryPosting(diarypostingDTO, authentication.getName());
 
-        return "<h1>다이어리 작성 완료, 쌀 1개 획득</h1>";
+        return "다이어리 작성 완료, 쌀 1개 획득!!";
     }
 
     @PutMapping("api/v1/user/updatePosting/{id}")
@@ -78,8 +80,8 @@ public class DiaryController {
     }
 
     @GetMapping("api/v1/user/monthreview/{month}")
-    public String monthReview (Authentication authentication ,@PathVariable int month){
-        String comment = diaryService.ShowMonthReview(authentication.getName(), month);
-        return comment;
+    public MonthReviewResDTO monthReview (Authentication authentication ,@PathVariable int month){
+        MonthReviewResDTO monthReviewResDTO = diaryService.ShowMonthReview(authentication.getName(), month);
+        return monthReviewResDTO;
     }
 }

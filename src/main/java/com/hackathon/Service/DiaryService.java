@@ -1,6 +1,7 @@
 package com.hackathon.Service;
 
 import com.hackathon.DTO.DiaryPostingDTO;
+import com.hackathon.DTO.MonthReviewResDTO;
 import com.hackathon.Repository.DiaryRepository;
 import com.hackathon.Repository.EmotionRepository;
 import com.hackathon.Repository.MonthReviewRepository;
@@ -159,18 +160,26 @@ public class DiaryService {
 //        }
     }
 
-    public String ShowMonthReview(String username, int month) {
+    public MonthReviewResDTO ShowMonthReview(String username, int month) {
+        MonthReviewResDTO monthReviewResDTO = new MonthReviewResDTO();
+        String comment;
+        String nickname;
+        String summery;
+
         User userEntity = userRepository.findByUsername(username);
         MonthReview monthReview = monthReviewRepository.findById(userEntity.getMonthReview().getId()).orElseThrow(() -> {
             return new IllegalArgumentException(" ");
         });
+
+        nickname = userEntity.getNickname();
+
         int good = 0;
         int bad = 0;
         int normal = 0;
 
-        for(int i = 0; i < monthReview.getEmotions().size(); i++){
-            if(monthReview.getEmotions().get(i).getMonth() == month){
-                if(monthReview.getEmotions().get(i).getName().equals("좋음"))
+        for (int i = 0; i < monthReview.getEmotions().size(); i++) {
+            if (monthReview.getEmotions().get(i).getMonth() == month) {
+                if (monthReview.getEmotions().get(i).getName().equals("좋음"))
                     good++;
                 else if (monthReview.getEmotions().get(i).getName().equals("나쁨"))
                     bad++;
@@ -179,16 +188,36 @@ public class DiaryService {
             }
         }
 
-        if(good + bad + normal < 3)
-            return "일기의 수가 너무 적어요.";
+        if (good + bad + normal < 3) {
+            comment = "일기 수가 너무 적어요.";
+            summery = "측정불가";
+            monthReviewResDTO.setComment(comment);
+            monthReviewResDTO.setNickname(nickname);
+            monthReviewResDTO.setSummery(summery);
 
+            return monthReviewResDTO;
+        }
         int max = good;
-        if(bad > max) max = bad;
-        if(normal > max) max = normal;
+        if (bad > max) max = bad;
+        if (normal > max) max = normal;
 
-        if(max == good) return (monthReviewConmment.good);
-        else if(max == bad) return (monthReviewConmment.bad);
-        else return (monthReviewConmment.normal);
+        if (max == good) {
+            comment = (monthReviewConmment.good);
+            summery = "흰쌀밥";
+        } else if (max == bad) {
+            comment = (monthReviewConmment.bad);
+            summery = "흑미";
+        } else {
+            comment = (monthReviewConmment.normal);
+            summery = "잡곡밥";
+        }
+
+
+        monthReviewResDTO.setComment(comment);
+        monthReviewResDTO.setNickname(nickname);
+        monthReviewResDTO.setSummery(summery);
+
+        return monthReviewResDTO;
     }
 
 //    public void cntEmotion(List<Emotion> emotionList){
