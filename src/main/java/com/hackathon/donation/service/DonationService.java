@@ -43,4 +43,9 @@ public class DonationService {
         return donationRepository.findAll();
     }
 
+    public void done(Long donation_id){
+        Donation donation = donationRepository.findById(donation_id);
+        donation.done();
+    }
+
 }

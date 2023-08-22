@@ -30,4 +30,8 @@ public class DonationRepositoryJPA implements DonationRepository{
         return em.createQuery(sql).getResultList();
     }
 
+    @Override
+    public Donation findById(Long id) {
+        return em.find(Donation.class, id);
+    }
 }

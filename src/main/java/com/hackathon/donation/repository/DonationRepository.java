@@ -13,4 +13,6 @@ public interface DonationRepository {
 
     List<Donation> findAll();
 
+    Donation findById(Long id);
+
 }
