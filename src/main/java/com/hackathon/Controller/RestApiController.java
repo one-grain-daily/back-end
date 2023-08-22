@@ -1,16 +1,16 @@
 package com.hackathon.Controller;
 
 import com.hackathon.Repository.GrainRepository;
+import com.hackathon.Repository.MonthReviewRepository;
 import com.hackathon.Repository.UserRepository;
+import com.hackathon.Service.EmotionService;
 import com.hackathon.model.Grain;
+import com.hackathon.model.MonthReview;
 import com.hackathon.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RestApiController {
@@ -20,31 +20,32 @@ public class RestApiController {
     public UserRepository userRepository;
     @Autowired
     public GrainRepository grainRepository;
+    @Autowired
+    public MonthReviewRepository monthReviewRepository;
 
-    @GetMapping("/home")
-    public String home(){
-        return "<h1>home</h1>";
-    }
-
-    @PostMapping("/token")
-    public String token(){
-        return "<h1>token</h1>";
-    }
+    @Autowired
+    public EmotionService emotionService;
 
     @PostMapping("/join")
     public String join(@RequestBody User user){
         user.setRoles("ROLE_USER");
         String rawPassword = user.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        String email = user.getEmail();
+        String nickname = user.getNickname();
         user.setPassword(encPassword);
-        user.setEmail(email);
+        user.setNickname(nickname);
 
         Grain grain = new Grain();
         grain.setCurrent_grain_num(0);
         grain.setDonation_grain_num(0);
+
+        MonthReview monthReview = new MonthReview();
+
         grainRepository.save(grain);
         user.setGrain(grain);
+
+        monthReviewRepository.save(monthReview);
+        user.setMonthReview(monthReview);
 
         userRepository.save(user);
         return "회원가입 완료";
@@ -62,5 +63,10 @@ public class RestApiController {
     @GetMapping("/api/v1/admin")
     public String admin(){
         return "admin";
+    }
+
+    @DeleteMapping("/deleteEmotion/{id}")
+    public void de(@PathVariable int id){
+        emotionService.DeleteEmotion(id);
     }
 }

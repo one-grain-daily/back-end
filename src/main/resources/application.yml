@@ -7,19 +7,19 @@ server:
       enabled: true
       force: true
 
-upload:
-  directory: static/images
 spring:
   mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:h2:tcp://localhost/~/one-grain-daily
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hack?serverTimezone=Asia/Seoul
+    username: cho
+    password: hee6455
+#    url : jdbc:mysql://115.85.183.243:3306/hack?serverTimezone=Asia/Seoul
+#    username: spring
+#    password: hee6455
 
   jpa:
     open-in-view: true
@@ -35,4 +35,3 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
-

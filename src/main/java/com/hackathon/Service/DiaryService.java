@@ -3,13 +3,20 @@ package com.hackathon.Service;
 import com.hackathon.DTO.DiaryPostingDTO;
 import com.hackathon.Repository.DiaryRepository;
 import com.hackathon.Repository.EmotionRepository;
+import com.hackathon.Repository.MonthReviewRepository;
 import com.hackathon.Repository.UserRepository;
 import com.hackathon.model.Diary;
 import com.hackathon.model.Emotion;
+import com.hackathon.model.MonthReview;
 import com.hackathon.model.User;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DiaryService {
@@ -20,12 +27,15 @@ public class DiaryService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private MonthReviewRepository monthReviewRepository;
+
+    @Autowired
     private EmotionService emotionService;
     @Autowired
     private GrainService grainService;
 
     @Transactional
-    public void DiaryPosting(DiaryPostingDTO diaryPostingDTO, String username){
+    public void DiaryPosting(DiaryPostingDTO diaryPostingDTO, String username) {
         Diary diaryEntity = new Diary();
         diaryEntity.setContent(diaryPostingDTO.getContent());
         diaryEntity.setTitle(diaryPostingDTO.getTitle());
@@ -33,6 +43,10 @@ public class DiaryService {
         Emotion emotion = new Emotion();
         emotion.setImage("image");
         emotion.setName(diaryPostingDTO.getEmotional());
+
+        int CreteMonth = LocalDateTime.now().getMonthValue();
+        emotion.setMonth(CreteMonth);
+
         emotionRepository.save(emotion);
 
         diaryEntity.setEmotion(emotion);
@@ -42,36 +56,160 @@ public class DiaryService {
 
         grainService.getGrain(username);
         diaryRepository.save(diaryEntity);
-        System.out.println(userEntity);
+        monthReviewInsert(userEntity, emotion);
     }
 
     @Transactional
-    public void DiaryUpdatePosting (DiaryPostingDTO diaryPostingDTO, int id){
-        Diary diaryEntity = diaryRepository.findById(id).orElseThrow(()->{
+    public void DiaryUpdatePosting(DiaryPostingDTO diaryPostingDTO, int id, String username) {
+        MonthReview monthReview = monthReviewRepository.findById(userRepository.findByUsername(username).getMonthReview().getId())
+                .orElseThrow(()->{
+                    return new IllegalArgumentException(" ");
+                });
+
+        Diary diaryEntity = diaryRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("글 찾기 실패!");
         });
 
-        Emotion emotion = emotionRepository.findById(diaryEntity.getEmotion().getId()).orElseThrow(()->{
+        Emotion emotion = emotionRepository.findById(diaryEntity.getEmotion().getId()).orElseThrow(() -> {
             return new IllegalArgumentException("감정 찾기 실패");
         });
 
+
+        System.out.println("===============monthReview befor Update====================");
+        System.out.println(monthReview);
+
+        monthReview.getEmotions().remove(emotion);
         diaryEntity.setTitle(diaryPostingDTO.getTitle());
         diaryEntity.setContent(diaryPostingDTO.getContent());
         emotion.setName(diaryPostingDTO.getEmotional());
         diaryEntity.setEmotion(emotion);
-        System.out.println(diaryEntity);
+        monthReview.getEmotions().add(emotion);
+
+        System.out.println("===============monthReview Update====================");
+        System.out.println(monthReview);
+
         System.out.println("업데이트 완료!");
     }
 
     @Transactional
-    public void DiaryDelete(int id, String username){
-        Diary diaryEntity = diaryRepository.findById(id).orElseThrow(()->{
+    public void DiaryDelete(int id, String username) {
+        Diary diaryEntity = diaryRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("글 찾기 실패!");
         });
 
+        MonthReview monthReview = monthReviewRepository.findById(userRepository.findByUsername(username).getMonthReview().getId())
+                .orElseThrow(()->{
+                    return new IllegalArgumentException(" ");
+                });
+
+        Emotion emotion = diaryEntity.getEmotion();
+
+        monthReview.getEmotions().remove(emotion);
+
         User userEntity = userRepository.findByUsername(username);
         emotionService.DeleteEmotion(diaryEntity.getEmotion().getId());
+
         userEntity.getDiaries().remove(diaryEntity);
         diaryRepository.deleteById(id);
     }
+
+    @Transactional
+    public void monthReviewInsert(User userEntity, Emotion emotion) {
+        MonthReview monthReview = monthReviewRepository.findById(userEntity.getMonthReview().getId()).orElseThrow(() -> {
+            return new IllegalArgumentException(" ");
+        });
+        monthReview.getEmotions().add(emotion);
+//        switch (month) {
+//            case 1:
+//                monthReview.getMonth1().add(emotion);
+//                break;
+//            case 2:
+//                monthReview.getMonth2().add(emotion);
+//                break;
+//            case 3:
+//                monthReview.getMonth3().add(emotion);
+//                break;
+//            case 4:
+//                monthReview.getMonth4().add(emotion);
+//                break;
+//            case 5:
+//                monthReview.getMonth5().add(emotion);
+//                break;
+//            case 6:
+//                monthReview.getMonth6().add(emotion);
+//                break;
+//            case 7:
+//                monthReview.getMonth7().add(emotion);
+//                break;
+//            case 8:
+//                monthReview.getMonth8().add(emotion);
+//                break;
+//            case 9:
+//                monthReview.getMonth9().add(emotion);
+//                break;
+//            case 10:
+//                monthReview.getMonth10().add(emotion);
+//                break;
+//            case 11:
+//                monthReview.getMonth11().add(emotion);
+//                break;
+//            default:
+//                monthReview.getMonth12().add(emotion);
+//                break;
+//        }
+    }
+
+    public String ShowMonthReview(String username, int month) {
+        User userEntity = userRepository.findByUsername(username);
+        MonthReview monthReview = monthReviewRepository.findById(userEntity.getMonthReview().getId()).orElseThrow(() -> {
+            return new IllegalArgumentException(" ");
+        });
+        int good = 0;
+        int bad = 0;
+        int normal = 0;
+
+        for(int i = 0; i < monthReview.getEmotions().size(); i++){
+            if(monthReview.getEmotions().get(i).getMonth() == month){
+                if(monthReview.getEmotions().get(i).getName().equals("좋음"))
+                    good++;
+                else if (monthReview.getEmotions().get(i).getName().equals("나쁨"))
+                    bad++;
+                else
+                    normal++;
+            }
+        }
+
+        if(good + bad + normal < 3)
+            return "일기의 수가 너무 적어요.";
+
+        int max = good;
+        if(bad > max) max = bad;
+        if(normal > max) max = normal;
+
+        if(max == good) return (monthReviewConmment.good);
+        else if(max == bad) return (monthReviewConmment.bad);
+        else return (monthReviewConmment.normal);
+    }
+
+//    public void cntEmotion(List<Emotion> emotionList){
+//        int good = 0;
+//        int bad = 0;
+//        int normal = 0;
+//
+//        for (int i = 0; i < emotionList.size(); i++){
+//            if(emotionList.get(i).getName().equals("좋아요"))
+//                good++;
+//            else if (emotionList.get(i).getName().equals("싫어요"))
+//                bad++;
+//            else
+//                normal++;
+//        }
+//        int max = good;
+//        if(bad > max) max = bad;
+//        if(normal > max) max = normal;
+//
+//        if(max == good) System.out.println(monthReviewConmment.good);
+//        if(max == bad) System.out.println(monthReviewConmment.bad);
+//        if(max == normal) System.out.println(monthReviewConmment.normal);
+//    }
 }

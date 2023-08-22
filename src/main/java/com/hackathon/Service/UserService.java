@@ -1,5 +1,6 @@
 package com.hackathon.Service;
 
+import com.hackathon.DTO.UserInfoReqDTO;
 import com.hackathon.Repository.UserRepository;
 import com.hackathon.model.Diary;
 import com.hackathon.model.User;
@@ -21,5 +22,16 @@ public class UserService {
         User userEntity = userRepository.findByUsername(username);
         System.out.println("일기 목록 : " + userEntity.getDiaries());
         return userEntity.getDiaries();
+    }
+
+    public UserInfoReqDTO userInformation(String username){
+        User userEntity = userRepository.findByUsername(username);
+        UserInfoReqDTO userInfoReqDTO = new UserInfoReqDTO();
+        userInfoReqDTO.setNickname(userEntity.getNickname());
+        userInfoReqDTO.setUsername(userEntity.getUsername());
+        userInfoReqDTO.setCurrent_grain_num(userEntity.getGrain().getCurrent_grain_num());
+        userInfoReqDTO.setDonation_grain_num(userEntity.getGrain().getDonation_grain_num());
+
+        return userInfoReqDTO;
     }
 }

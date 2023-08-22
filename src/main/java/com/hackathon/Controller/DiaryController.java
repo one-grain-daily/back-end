@@ -66,8 +66,8 @@ public class DiaryController {
     }
 
     @PutMapping("api/v1/user/updatePosting/{id}")
-    public String diaryUpdate(@RequestBody DiaryPostingDTO diaryPostingDTO, @PathVariable int id){
-        diaryService.DiaryUpdatePosting(diaryPostingDTO, id);
+    public String diaryUpdate(@RequestBody DiaryPostingDTO diaryPostingDTO, @PathVariable int id, Authentication authentication){
+        diaryService.DiaryUpdatePosting(diaryPostingDTO, id, authentication.getName());
         return "다이어리 업데이트 완료!";
     }
 
@@ -75,5 +75,11 @@ public class DiaryController {
     public String diaryDelete(@PathVariable int id, Authentication authentication){
         diaryService.DiaryDelete(id, authentication.getName());
         return "일기 삭제 완료!";
+    }
+
+    @GetMapping("api/v1/user/monthreview/{month}")
+    public String monthReview (Authentication authentication ,@PathVariable int month){
+        String comment = diaryService.ShowMonthReview(authentication.getName(), month);
+        return comment;
     }
 }

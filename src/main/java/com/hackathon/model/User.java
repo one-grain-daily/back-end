@@ -17,9 +17,11 @@ public class User {
     private long id;
     private String username;
     private String password;
-    private String email;
+    private String nickname;
     @OneToOne
     private Grain grain;
+    @OneToOne
+    private MonthReview monthReview;
     private String roles;
     @OneToMany
     private List<Diary> diaries = new ArrayList<>();
