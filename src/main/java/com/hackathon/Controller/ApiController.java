@@ -18,4 +18,10 @@ public class ApiController {
         return "login";
     }
 
+    //메인화면
+    @GetMapping
+    public String index(){
+        return "index";
+    }
+
 }
