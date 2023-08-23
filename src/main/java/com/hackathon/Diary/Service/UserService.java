@@ -1,9 +1,9 @@
-package com.hackathon.Service;
+package com.hackathon.Diary.Service;
 
-import com.hackathon.DTO.UserInfoReqDTO;
-import com.hackathon.Repository.UserRepository;
-import com.hackathon.model.Diary;
-import com.hackathon.model.User;
+import com.hackathon.Diary.DTO.UserInfoReqDTO;
+import com.hackathon.Diary.model.Diary;
+import com.hackathon.Diary.model.User;
+import com.hackathon.Diary.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

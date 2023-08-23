@@ -1,4 +1,4 @@
-package com.hackathon.DTO;
+package com.hackathon.Diary.DTO;
 
 import lombok.Data;
 

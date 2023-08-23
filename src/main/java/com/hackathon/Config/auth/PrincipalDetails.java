@@ -1,6 +1,6 @@
 package com.hackathon.Config.auth;
 
-import com.hackathon.model.User;
+import com.hackathon.Diary.model.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

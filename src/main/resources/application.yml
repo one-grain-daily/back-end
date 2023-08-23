@@ -6,7 +6,8 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-
+upload:
+  directory: static/images
 spring:
   mvc:
     pathmatch:
@@ -14,17 +15,17 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/hack?serverTimezone=Asia/Seoul
-#    username: cho
-#    password: hee6455
-    url : jdbc:mysql://115.85.183.243:3306/hack?serverTimezone=Asia/Seoul
-    username: spring
+    url: jdbc:mysql://localhost:3306/hackathon?serverTimezone=Asia/Seoul
+    username: cho
     password: hee6455
+#    url : jdbc:mysql://115.85.183.243:3306/hackathon?serverTimezone=Asia/Seoul
+#    username: spring
+#    password: hee6455
 
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       use-new-id-generator-mappings: false

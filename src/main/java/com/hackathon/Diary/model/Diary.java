@@ -1,4 +1,4 @@
-package com.hackathon.model;
+package com.hackathon.Diary.model;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;

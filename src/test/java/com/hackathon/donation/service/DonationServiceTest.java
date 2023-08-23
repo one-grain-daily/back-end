@@ -1,10 +1,10 @@
 package com.hackathon.donation.service;
 
-import com.hackathon.Repository.UserRepository;
+import com.hackathon.Diary.Repository.UserRepository;
 import com.hackathon.donation.domain.Basket;
 import com.hackathon.donation.domain.Donation;
 import com.hackathon.donation.repository.DonationRepository;
-import com.hackathon.model.User;
+import com.hackathon.Diary.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

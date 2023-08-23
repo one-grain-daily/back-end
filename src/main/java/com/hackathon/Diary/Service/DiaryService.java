@@ -1,23 +1,20 @@
-package com.hackathon.Service;
+package com.hackathon.Diary.Service;
 
-import com.hackathon.DTO.DiaryPostingDTO;
-import com.hackathon.DTO.MonthReviewResDTO;
-import com.hackathon.Repository.DiaryRepository;
-import com.hackathon.Repository.EmotionRepository;
-import com.hackathon.Repository.MonthReviewRepository;
-import com.hackathon.Repository.UserRepository;
-import com.hackathon.model.Diary;
-import com.hackathon.model.Emotion;
-import com.hackathon.model.MonthReview;
-import com.hackathon.model.User;
-import net.bytebuddy.asm.Advice;
+import com.hackathon.Diary.DTO.DiaryPostingDTO;
+import com.hackathon.Diary.DTO.MonthReviewResDTO;
+import com.hackathon.Diary.model.Diary;
+import com.hackathon.Diary.model.Emotion;
+import com.hackathon.Diary.model.User;
+import com.hackathon.Diary.Repository.DiaryRepository;
+import com.hackathon.Diary.Repository.EmotionRepository;
+import com.hackathon.Diary.Repository.MonthReviewRepository;
+import com.hackathon.Diary.Repository.UserRepository;
+import com.hackathon.Diary.model.MonthReview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class DiaryService {
@@ -179,9 +176,9 @@ public class DiaryService {
 
         for (int i = 0; i < monthReview.getEmotions().size(); i++) {
             if (monthReview.getEmotions().get(i).getMonth() == month) {
-                if (monthReview.getEmotions().get(i).getName().equals("좋음"))
+                if (monthReview.getEmotions().get(i).getName().equals("happy"))
                     good++;
-                else if (monthReview.getEmotions().get(i).getName().equals("나쁨"))
+                else if (monthReview.getEmotions().get(i).getName().equals("angry"))
                     bad++;
                 else
                     normal++;
@@ -190,7 +187,7 @@ public class DiaryService {
 
         if (good + bad + normal < 3) {
             comment = "일기 수가 너무 적어요.";
-            summery = "측정불가";
+            summery = "빈 그릇";
             monthReviewResDTO.setComment(comment);
             monthReviewResDTO.setNickname(nickname);
             monthReviewResDTO.setSummery(summery);
@@ -202,13 +199,13 @@ public class DiaryService {
         if (normal > max) max = normal;
 
         if (max == good) {
-            comment = (monthReviewConmment.good);
+            comment = (monthReviewConmment.happy);
             summery = "흰쌀밥";
         } else if (max == bad) {
-            comment = (monthReviewConmment.bad);
+            comment = (monthReviewConmment.angry);
             summery = "흑미";
         } else {
-            comment = (monthReviewConmment.normal);
+            comment = (monthReviewConmment.sad);
             summery = "잡곡밥";
         }
 

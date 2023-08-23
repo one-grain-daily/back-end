@@ -1,12 +1,11 @@
-package com.hackathon.Controller;
+package com.hackathon.Diary.Controller;
 
-import com.hackathon.DTO.GrainReqDTO;
-import com.hackathon.DTO.UserInfoReqDTO;
-import com.hackathon.Service.GrainService;
-import com.hackathon.Service.UserService;
+import com.hackathon.Diary.DTO.GrainReqDTO;
+import com.hackathon.Diary.DTO.UserInfoReqDTO;
+import com.hackathon.Diary.Service.GrainService;
+import com.hackathon.Diary.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

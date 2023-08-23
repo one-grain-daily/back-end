@@ -3,7 +3,7 @@ package com.hackathon.donation.service;
 import com.hackathon.donation.domain.Basket;
 import com.hackathon.donation.domain.Donation;
 import com.hackathon.donation.repository.DonationRepository;
-import com.hackathon.model.User;
+import com.hackathon.Diary.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +24,17 @@ public class DonationService {
     }
 
     //기부 하기
+    @Transactional
     public void donate(User user, Long grains){
         Donation donation = donationRepository.findCurrentDonation();
-        donation.donate(user, grains);
+        if(donation.getUsers().contains(user)) { // 포함이면
+            //donation.donate(grains);
+            donation.setBasket(donation.getBasket() + grains);
+        }
+        else {
+            donation.getUsers().add(user);
+            donation.setBasket(donation.getBasket() + grains);
+        }
     }
 
     //바구니 갯수 조회

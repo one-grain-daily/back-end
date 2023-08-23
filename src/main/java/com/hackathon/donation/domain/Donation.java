@@ -2,13 +2,11 @@ package com.hackathon.donation.domain;
 
 import com.hackathon.common.entity.BaseTimeEntity;
 import com.hackathon.donation.DonationStatus;
-import com.hackathon.model.User;
-import lombok.Data;
+import com.hackathon.Diary.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +45,10 @@ public class Donation extends BaseTimeEntity {
      */
     public void donate(User user, Long basket){
         users.add(user);
+        this.basket += basket;
+    }
+
+    public void donate(Long basket){
         this.basket += basket;
     }
 

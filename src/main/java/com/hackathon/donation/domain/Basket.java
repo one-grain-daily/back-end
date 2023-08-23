@@ -14,7 +14,7 @@ public class Basket {
      */
 
     public boolean isMax(){
-        return max_grain < current_grain ? true : false;
+        return max_grain < current_grain;
     }
 
 }

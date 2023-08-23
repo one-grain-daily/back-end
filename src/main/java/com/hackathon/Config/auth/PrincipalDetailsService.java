@@ -1,7 +1,7 @@
 package com.hackathon.Config.auth;
 
-import com.hackathon.Repository.UserRepository;
-import com.hackathon.model.User;
+import com.hackathon.Diary.Repository.UserRepository;
+import com.hackathon.Diary.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

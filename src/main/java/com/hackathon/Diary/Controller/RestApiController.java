@@ -1,12 +1,12 @@
-package com.hackathon.Controller;
+package com.hackathon.Diary.Controller;
 
-import com.hackathon.Repository.GrainRepository;
-import com.hackathon.Repository.MonthReviewRepository;
-import com.hackathon.Repository.UserRepository;
-import com.hackathon.Service.EmotionService;
-import com.hackathon.model.Grain;
-import com.hackathon.model.MonthReview;
-import com.hackathon.model.User;
+import com.hackathon.Diary.Service.EmotionService;
+import com.hackathon.Diary.Repository.GrainRepository;
+import com.hackathon.Diary.Repository.MonthReviewRepository;
+import com.hackathon.Diary.Repository.UserRepository;
+import com.hackathon.Diary.model.Grain;
+import com.hackathon.Diary.model.MonthReview;
+import com.hackathon.Diary.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

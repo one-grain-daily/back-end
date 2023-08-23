@@ -1,7 +1,7 @@
-package com.hackathon.Controller;
+package com.hackathon.Diary.Controller;
 
-import com.hackathon.Repository.EmotionRepository;
-import com.hackathon.model.Emotion;
+import com.hackathon.Diary.model.Emotion;
+import com.hackathon.Diary.Repository.EmotionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

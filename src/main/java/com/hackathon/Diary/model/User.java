@@ -1,4 +1,4 @@
-package com.hackathon.model;
+package com.hackathon.Diary.model;
 
 import com.hackathon.donation.domain.Donation;
 import lombok.Data;

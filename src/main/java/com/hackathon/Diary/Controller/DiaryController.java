@@ -1,14 +1,13 @@
-package com.hackathon.Controller;
+package com.hackathon.Diary.Controller;
 
-import com.hackathon.DTO.DiaryPostingDTO;
-import com.hackathon.DTO.MonthReviewResDTO;
-import com.hackathon.Service.DiaryService;
-import com.hackathon.Service.UserService;
-import com.hackathon.model.Diary;
-import com.hackathon.model.User;
+import com.hackathon.Diary.DTO.DiaryPostingDTO;
+import com.hackathon.Diary.DTO.MonthReviewResDTO;
+import com.hackathon.Diary.model.Diary;
+import com.hackathon.Diary.model.User;
+import com.hackathon.Diary.Service.DiaryService;
+import com.hackathon.Diary.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -80,7 +79,7 @@ public class DiaryController {
     }
 
     @GetMapping("api/v1/user/monthreview/{month}")
-    public MonthReviewResDTO monthReview (Authentication authentication ,@PathVariable int month){
+    public MonthReviewResDTO monthReview (Authentication authentication , @PathVariable int month){
         MonthReviewResDTO monthReviewResDTO = diaryService.ShowMonthReview(authentication.getName(), month);
         return monthReviewResDTO;
     }
