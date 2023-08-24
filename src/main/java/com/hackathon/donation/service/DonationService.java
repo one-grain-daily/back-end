@@ -56,4 +56,9 @@ public class DonationService {
         donation.done();
     }
 
+    public void setImage(Long donation_id, String imageUrl){
+        Donation donation = donationRepository.findById(donation_id);
+        donation.setImage_url(imageUrl);
+    }
+
 }
