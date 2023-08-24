@@ -17,11 +17,15 @@
                     <td th:text="${donation.createdDate}">바구니 채워진 날짜</a></td>
                     <td th:text="${donation.status}">기부 상태</a></td>
                     <td th:text="${donation.basket}">기부 상태</a></td>
-                    <td th:each="user : ${donation.users}">
-                        <p th:text="${user.username}"></p>
+                    <td>
+                        <form method="get"
+                              action="donaters_list.html"
+                              th:action="@{|/donations/${donation.id}|}"
+                        >
+                            <button> 기부자 확인 </button>
+                        </form>
                     </td>
                     <td>
-
                         <form method="post"
                               action="donation_list.html"
                               th:action="@{|/donations/${donation.id}/done|}"

@@ -3,6 +3,7 @@ package com.hackathon.donation.controller;
 import com.hackathon.Diary.Repository.UserRepository;
 import com.hackathon.donation.domain.Basket;
 import com.hackathon.donation.domain.Donation;
+import com.hackathon.donation.repository.DonationRepository;
 import com.hackathon.donation.service.DonationService;
 import com.hackathon.Diary.model.User;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class DonationController {
 
     private final DonationService donationService;
     private final UserRepository userRepository;
+    private final DonationRepository donationRepository;
 
     //바구니 조회
     @GetMapping("/basket")
@@ -42,6 +44,18 @@ public class DonationController {
         model.addAttribute("donations", donations);
         return "donation_list";
 
+    }
+
+    @GetMapping("/{donation_id}")
+    public String donateList(
+
+            Model model,
+            @PathVariable Long donation_id
+
+    ){
+        Donation donation = donationRepository.findById(donation_id);
+        model.addAttribute("donation", donation);
+        return "donaters_list";
     }
 
     //기부 상태 변경

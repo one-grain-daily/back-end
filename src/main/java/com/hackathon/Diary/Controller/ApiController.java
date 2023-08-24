@@ -19,7 +19,7 @@ public class ApiController {
     }
 
     //메인화면
-    @GetMapping
+    @GetMapping("/")
     public String index(){
         return "index";
     }

@@ -34,7 +34,7 @@ public class GrainService {
             return new IllegalArgumentException(" ");
         });
 
-        grain.setCurrent_grain_num(grain.getCurrent_grain_num() + 5000);
+        grain.setCurrent_grain_num(grain.getCurrent_grain_num() + 4500);
 
         if(grain.getCurrent_grain_num() >= 30){
             long grainNum = grain.getCurrent_grain_num();
