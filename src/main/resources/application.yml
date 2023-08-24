@@ -14,13 +14,10 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hackathon?serverTimezone=Asia/Seoul
-    username: cho
-    password: hee6455
-#    url : jdbc:mysql://115.85.183.243:3306/hackathon?serverTimezone=Asia/Seoul
-#    username: spring
-#    password: hee6455
+    driver-class-name: org.h2.Driver
+    url : jdbc:h2:tcp://localhost/~/one-grain-daily
+    username: sa
+    password:
 
   jpa:
     open-in-view: true
