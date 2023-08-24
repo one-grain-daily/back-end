@@ -1,20 +1,11 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content">
     <hr class="my-4">
-    <div>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>기부자 명단</th>
-            </tr>
-            </thead>
-            <tbody>
-                <td th:each="user : ${donation.users}">
-                    <p th:text="${user.username}"></p>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+
+
+    <h3> 기부자 명단 </h3>
+    <div th:each="user : ${donation.users}">
+        <h5 th:text="${user.username}"></h5>
     </div>
 </div>
 </html>
