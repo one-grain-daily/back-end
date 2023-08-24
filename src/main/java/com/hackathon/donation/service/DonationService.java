@@ -43,7 +43,7 @@ public class DonationService {
         Donation donation = donationRepository.findCurrentDonation();
         Basket basket = new Basket();
         basket.setCurrent_grain(donation.getBasket());
-        basket.setMax_grain(10000L);
+        basket.setMax_grain(1500L);
         return basket;
     }
 

@@ -8,14 +8,11 @@ import com.hackathon.Diary.model.Grain;
 import com.hackathon.donation.DonationStatus;
 import com.hackathon.donation.domain.Donation;
 import com.hackathon.donation.repository.DonationRepository;
-import com.hackathon.donation.repository.DonationRepositoryJPA;
 import com.hackathon.donation.service.DonationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 @Service
 public class GrainService {
     @Autowired
@@ -34,7 +31,7 @@ public class GrainService {
             return new IllegalArgumentException(" ");
         });
 
-        grain.setCurrent_grain_num(grain.getCurrent_grain_num() + 4500);
+        grain.setCurrent_grain_num(grain.getCurrent_grain_num() + 1);
 
         if(grain.getCurrent_grain_num() >= 30){
             long grainNum = grain.getCurrent_grain_num();
@@ -50,7 +47,7 @@ public class GrainService {
                 userEntity.getDonations().add(nowDonation);
             }
             System.out.println( "==============현재 기부량 ====================="+ nowDonation.getBasket());
-            if(nowDonation.getBasket() >= 10000L){
+            if(nowDonation.getBasket() >= 1500L){
                 System.out.println("====================기부 목표 완료===========================");
                 nowDonation.setStatus(DonationStatus.DONE);
                 for(int i = 0; i < nowDonation.getUsers().size(); i++){

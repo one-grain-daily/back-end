@@ -25,10 +25,10 @@ public class DiaryController {
         User userEntity = userService.findUser(authentication.getName());
         Diary diary = new Diary();
 
-        String[] times = date.split("-");
-        String year = times[0];
-        String month = times[1];
-        String day = times[2];
+        String[] times = date.split(" ");
+        String year = times[0].substring(0, times[0].length() - 1);
+        String month = times[1].substring(0, times[1].length() - 1);
+        String day = times[2].substring(0, times[2].length() - 1);
 
         System.out.println(year + " " + month + " " + day);
 
@@ -38,12 +38,7 @@ public class DiaryController {
             LocalDateTime daytime = tmp_diary.getCreateTime().toLocalDateTime();
             String tmp_year = String.valueOf(daytime.getYear());
             String tmp_month = String.valueOf(daytime.getMonthValue());
-            if(daytime.getMonthValue() < 10)
-                tmp_month = "0" + tmp_month;
-
             String tmp_day = String.valueOf(daytime.getDayOfMonth());
-            if(daytime.getDayOfMonth() < 10)
-                tmp_day = "0" + tmp_day;
 
             if((year.equals(tmp_year) && month.equals(tmp_month)) && day.equals(tmp_day)){
                 diary = tmp_diary;
